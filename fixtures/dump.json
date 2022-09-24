@@ -1,0 +1,96 @@
+[
+{
+  "model": "photo.photo",
+  "pk": 1,
+  "fields": {
+    "photo_img": "photo_img/airpods-pro-roundup.webp",
+    "title": "test",
+    "created_at": "2022-09-24T07:10:07.135Z",
+    "author": [
+      "admin"
+    ],
+    "private_photo": true,
+    "album": [
+      1
+    ]
+  }
+},
+{
+  "model": "photo.photo",
+  "pk": 2,
+  "fields": {
+    "photo_img": "photo_img/default.jpeg",
+    "title": "test2",
+    "created_at": "2022-09-24T07:10:23.618Z",
+    "author": [
+      "admin"
+    ],
+    "private_photo": false,
+    "album": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "photo.photo",
+  "pk": 3,
+  "fields": {
+    "photo_img": "photo_img/pegasus-turbo-next-nature_S0LHpVx.jpeg",
+    "title": "rtyrt",
+    "created_at": "2022-09-24T08:25:23.377Z",
+    "author": [
+      "admin"
+    ],
+    "private_photo": false,
+    "album": [
+      2
+    ]
+  }
+},
+{
+  "model": "photo.photo",
+  "pk": 5,
+  "fields": {
+    "photo_img": "photo_img/70samsung.webp",
+    "title": "asdfsa",
+    "created_at": "2022-09-24T10:54:07.302Z",
+    "author": [
+      "user1"
+    ],
+    "private_photo": false,
+    "album": []
+  }
+},
+{
+  "model": "photo.album",
+  "pk": 1,
+  "fields": {
+    "name": "test444",
+    "description": "fffff",
+    "album_author": [
+      "user1"
+    ],
+    "created_at": "2022-09-24T10:00:10.383Z",
+    "private_album": false,
+    "photo": [
+      1,
+      5
+    ]
+  }
+},
+{
+  "model": "photo.album",
+  "pk": 2,
+  "fields": {
+    "name": "ewr",
+    "description": "safgrs",
+    "album_author": [
+      "user1"
+    ],
+    "created_at": "2022-09-24T10:02:03.359Z",
+    "private_album": false,
+    "photo": []
+  }
+}
+]
