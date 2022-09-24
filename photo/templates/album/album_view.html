@@ -23,6 +23,8 @@
   <dd class="col-sm-9">{{ album.description }}</dd>
     <dt class="col-sm-3">Created date:</dt>
   <dd class="col-sm-9">{{ album.created_at }}</dd>
+    <dt class="col-sm-3">Album author:</dt>
+  <dd class="col-sm-9">{{ album.album_author }}</dd>
     {% if user.is_superuser or u and user in project.users.all %}
     <dt class="col-sm-3">Project users:</dt>
     {% for u in project.users.all %}

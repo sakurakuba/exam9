@@ -34,7 +34,7 @@ class RegisterView(CreateView):
         if not next_url:
             next_url = self.request.POST.get('next')
         if not next_url:
-            next_url = reverse('review:index')
+            next_url = reverse('photo:index')
         return next_url
 
 
@@ -46,7 +46,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('review:index')
+            return redirect('photo:index')
         else:
             context['has_error'] = True
     return render(request, 'login.html', context=context)
@@ -54,7 +54,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('review:index')
+    return redirect('photo:index')
 
 
 class ChangeProfileView(PermissionRequiredMixin, UpdateView):
