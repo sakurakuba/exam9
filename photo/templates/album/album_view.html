@@ -36,6 +36,7 @@
     <dt class="col-sm-3">Photos in album:</dt>
         <br/>
     {% for photo in album.photo.all %}
+        {% if photo.private_photo is False %}
 <div class="list-group">
   <a href="{% url "photo:photo_view" photo.pk %}" class="list-group-item list-group-item-action">
     <div class="d-flex w-100 justify-content-between">
@@ -45,6 +46,7 @@
         <h5 class="mb-1">Created at: {{ photo.created_at }}</h5>
     </div>
   </a>
+        {% endif %}
     {% endfor %}
 </div>
 </dl>
