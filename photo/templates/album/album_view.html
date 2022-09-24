@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 {% block nav %}
     {% if request.user.is_authenticated %}
-        <li class="nav-item"><a class="nav-link" href="{% url 'photo:photo_add' album.pk %}">Add Photo to Album</a></li>
         <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url "photo:album_create" %}">Create new Album</a>
         </li>
+            {% if request.user == album.album_author or request.user.is_superuser or perms.photo.change_project %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'photo:photo_add' album.pk %}">Add Photo to Album</a></li>
             <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url "photo:album_update" album.pk %}">Update Album</a>
         </li>
             <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url "photo:album_delete" album.pk %}">Delete Album</a>
         </li>
+            {% endif %}
     {% endif %}
 {% endblock %}
 
