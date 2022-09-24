@@ -1,5 +1,6 @@
 from django.urls import path
 
+from photo.views import IndexView
 
 app_name = "photo"
 
