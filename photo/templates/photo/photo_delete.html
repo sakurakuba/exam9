@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Photo Delete{% endblock %}
+
+{% block nav %}
+    <li class="nav-item"><a class="nav-link" href="{% url 'photo:photo_view' photo.pk %}">Cancel</a></li>
+{% endblock %}
+
+{% block content %}
+    <h1>Please, confirm - delete "{{ photo.title }}"?</h1>
+    <form action="{% url "photo:photo_delete" photo.pk %}" method="post">
+        {% csrf_token %}
+        <div class="btn-group">
+            <button class="btn btn-danger" type="submit">Delete</button>
+            <a class="btn btn-primary" href="{% url 'photo:photo_view' photo.pk %}">Cancel</a>
+        </div>
+    </form>
+{% endblock %}
