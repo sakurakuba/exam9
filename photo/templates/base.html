@@ -38,10 +38,10 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url "accounts:login" %}?next={{ request.get_full_path }}">Login</a>
+                        <a class="nav-link" href="{% url "accounts:login" %} ">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url "accounts:registration" %}?next={{ request.get_full_path }}">Register</a>
+                        <a class="nav-link" href="{% url "accounts:registration" %}">Register</a>
                     </li>
                 {% endif %}
 

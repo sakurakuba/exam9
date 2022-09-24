@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -8,16 +8,15 @@ from photo.models import Photo, Album
 
 
 # Create your views here.
-class IndexView(ListView):
+class IndexView(LoginRequiredMixin, ListView):
     model = Photo
     template_name = "photo/index.html"
     context_object_name = "photos"
 
 
-class PhotoView(DetailView):
+class PhotoView(LoginRequiredMixin, DetailView):
     model = Photo
     template_name = 'photo/photo_view.html'
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -26,7 +25,7 @@ class PhotoView(DetailView):
         return context
 
 
-class PhotoCreateView(CreateView):
+class PhotoCreateView(LoginRequiredMixin, CreateView):
     model = Photo
     form_class = PhotoForm
     template_name = 'photo/photo_create.html'
@@ -40,10 +39,11 @@ class PhotoCreateView(CreateView):
         return reverse('photo:photo_view', kwargs={'pk': self.object.pk})
 
 
-class PhotoUpdateView(UpdateView):
+class PhotoUpdateView(PermissionRequiredMixin, UpdateView):
     model = Photo
     form_class = PhotoForm
     template_name = 'photo/photo_update.html'
+    permission_required = "photo.change_photo"
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -54,9 +54,16 @@ class PhotoUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('photo:photo_view', kwargs={'pk': self.object.pk})
 
+    def has_permission(self):
+        return super().has_permission() or self.request.user.is_superuser or self.request.user
 
-class PhotoDeleteView(DeleteView):
+
+class PhotoDeleteView(PermissionRequiredMixin, DeleteView):
     model = Photo
     template_name = 'photo/photo_delete.html'
     success_url = reverse_lazy('photo:index')
+    permission_required = "photo.delete_photo"
+
+    def has_permission(self):
+        return super().has_permission() or self.request.user.is_superuser or self.request.user
 

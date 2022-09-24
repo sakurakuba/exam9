@@ -4,14 +4,10 @@
 
 
 {% block nav %}
-    {% if request.user.is_authenticated %}
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url "photo:album_create" %}">Create new Album</a>
-        </li>
-    {% endif %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'photo:photo_create' %}">Upload new Photo</a></li>
+        {% if request.user == photo.author or request.user.is_superuser or perms.photo.change_project %}
             <li class="nav-item"><a class="nav-link" href="{% url 'photo:photo_update' photo.pk %}">Update Photo</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'photo:photo_delete' photo.pk %}">Delete Photo</a></li>
+        {% endif %}
 {% endblock %}
 
 
@@ -21,7 +17,7 @@
         <div class="card-body">
             <h1>{{ photo.title }}</h1>
             <p class="card-text">Author: {{ photo.author }}</p>
-            <p class="card-text">Public/Private: {{ photo.private_photo }}</p>
+            <p class="card-text">Private: {{ photo.private_photo }}</p>
             <p class="card-text">Created at: {{ photo.created_at }}</p>
             <p class="card-text">Albums:</p>
             {% for ph in photo.photos.all %}

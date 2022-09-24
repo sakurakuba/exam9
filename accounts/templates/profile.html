@@ -26,11 +26,15 @@
 
     <div class="card flex-row mt-3">
         <div class="card-body ms-5">
-    {% for rv in user_obj.reviews.all %}
-        ===========================================
-        <h5 class="card-title"><a href="{% url "review:product_view" rv.product.pk %}">Product: {{ rv.product.name }}</a></h5>
-            <h6 class="card-subtitle mb-2 text-muted">Review: {{ rv.text }}</h6>
-            <h6 class="card-subtitle mb-2 text-muted">Score: {{ rv.score }}</h6>
+        {% for ph in user_obj.photo_author.all %}
+        <img src="{{ ph.photo_img.url }}" class="card-img-top w-25" alt="...">
+        <h5 class="card-title"><a href="{% url "photo:photo_view" ph.pk %}">Photo: {{ ph.title }}</a></h5>
+            <h6 class="card-subtitle mb-2 text-muted">Created at: {{ ph.created_at }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">Album: </h6>
+            {% for ph in photo.photos.all %}
+                <p class="card-text"><a href="{% url "photo:album_view" ph.pk %}">{{ ph.name }}</a></p>
+            {% endfor %}
+
     {% endfor %}
         </div>
     </div>
