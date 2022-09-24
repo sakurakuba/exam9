@@ -8,7 +8,7 @@ class Photo(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created date")
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='photo_author',
                                verbose_name='Author')
-    album = models.ManyToManyField("photo.Album", related_name="album", blank=True)
+    album = models.ManyToManyField("photo.Album", related_name="albums", blank=True)
     private_photo = models.BooleanField(default=False, verbose_name="Private photo")
 
     def __str__(self):
@@ -20,7 +20,8 @@ class Photo(models.Model):
 
 
 class Album(models.Model):
-    name = models.TextField(max_length=50, verbose_name='Album name')
+    photo = models.ManyToManyField("photo.Photo", related_name="photos")
+    name = models.CharField(max_length=50, verbose_name='Album name')
     description = models.TextField(max_length=1000, blank=True, null=True, verbose_name='Description')
     album_author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='album_author', verbose_name='Album Author')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created date")

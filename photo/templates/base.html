@@ -25,6 +25,10 @@
                 {% endblock %}
 
             {% if request.user.is_authenticated %}
+                <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url "photo:album_create" %}">Create new Album</a>
+        </li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'photo:photo_create' %}">Upload new Photo</a></li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url "accounts:logout" %}">Logout</a>
                     </li>

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Album Delete{% endblock %}
+
+{% block nav %}
+    <li class="nav-item"><a class="nav-link" href="{% url 'photo:album_view' album.pk %}">Cancel</a></li>
+{% endblock %}
+
+{% block content %}
+    <h1>Please, confirm - delete "{{ album.name }}"?</h1>
+    <form action="{% url "photo:album_delete" album.pk %}" method="post">
+        {% csrf_token %}
+        <div class="btn-group">
+            <button class="btn btn-danger" type="submit">Delete</button>
+            <a class="btn btn-primary" href="{% url 'photo:album_view' album.pk %}">Cancel</a>
+        </div>
+    </form>
+{% endblock %}

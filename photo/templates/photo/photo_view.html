@@ -4,7 +4,11 @@
 
 
 {% block nav %}
-        <li class="nav-item"><a class="nav-link" href="{% url 'photo:index' %}">Add Review</a></li>
+    {% if request.user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url "photo:album_create" %}">Create new Album</a>
+        </li>
+    {% endif %}
             <li class="nav-item"><a class="nav-link" href="{% url 'photo:photo_create' %}">Upload new Photo</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'photo:photo_update' photo.pk %}">Update Photo</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'photo:photo_delete' photo.pk %}">Delete Photo</a></li>
@@ -19,31 +23,12 @@
             <p class="card-text">Author: {{ photo.author }}</p>
             <p class="card-text">Public/Private: {{ photo.private_photo }}</p>
             <p class="card-text">Created at: {{ photo.created_at }}</p>
-            <p class="card-text">Album: {{ photo.album.all }}</p>
-            <p class="pre">{{ photo.title }}</p>
+            <p class="card-text">Albums:</p>
+            {% for ph in photo.photos.all %}
+                <p class="card-text"><a href="{% url "photo:album_view" ph.pk %}">{{ ph.name }}</a></p>
+            {% endfor %}
         </div>
     </div>
 
-    <h3 class="my-3 text-center">Albums</h3>
-    <div class="row">
-        {% for album in albums %}
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <p class="card-text"><a href="{% url "accounts:profile" album.album_author.pk %}">By: {{ album.album_author }}</a></p>
-                        <p class="card-text">{{ album.name }}</p>
-                    </div>
-                    <div class="btn-group w-100" role="group" aria-label="Basic mixed styles example">
-
-                            <a class="btn btn-danger" href="{% url "album:album_update" album.pk %}">Update</a>
-                            <a class="btn btn-warning" href="{% url "album:album_delete" album.pk %}">Delete</a>
-
-                    </div>
-                </div>
-            </div>
-        {% empty %}
-            <p>Not in any album yet</p>
-        {% endfor %}
-    </div>
 {% endblock %}
 

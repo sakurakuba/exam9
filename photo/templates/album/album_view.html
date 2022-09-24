@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block nav %}
+    {% if request.user.is_authenticated %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'photo:photo_add' album.pk %}">Add Photo to Album</a></li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url "photo:album_create" %}">Create new Album</a>
+        </li>
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url "photo:album_update" album.pk %}">Update Album</a>
+        </li>
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url "photo:album_delete" album.pk %}">Delete Album</a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<h4>Album Details</h4>
+    <dl class="row">
+  <dt class="col-sm-3">Album name:</dt>
+  <dd class="col-sm-9">{{ album.name }}</dd>
+        <dt class="col-sm-3">Album Description:</dt>
+  <dd class="col-sm-9">{{ album.description }}</dd>
+    <dt class="col-sm-3">Created date:</dt>
+  <dd class="col-sm-9">{{ album.created_at }}</dd>
+    {% if user.is_superuser or u and user in project.users.all %}
+    <dt class="col-sm-3">Project users:</dt>
+    {% for u in project.users.all %}
+        <span><dd class="col-sm-9"> <a class="nav-link" href="{% url "accounts:profile" u.pk %}">{{ u.username }}</a> </dd></span>
+    {% endfor %}
+    {% endif %}
+    <dt class="col-sm-3">Photos in album:</dt>
+        <br/>
+    {% for photo in album.photo.all %}
+<div class="list-group">
+  <a href="{% url "photo:photo_view" photo.pk %}" class="list-group-item list-group-item-action">
+    <div class="d-flex w-100 justify-content-between">
+        <img src="{{ photo.photo_img.url }}" class="card-img-top w-25" alt="...">
+      <h5 class="mb-1">Title: {{ photo.title }}</h5>
+        <h5 class="mb-1">Photo Author: {{ photo.author }}</h5>
+        <h5 class="mb-1">Created at: {{ photo.created_at }}</h5>
+    </div>
+  </a>
+    {% endfor %}
+</div>
+</dl>
+{% endblock %}
