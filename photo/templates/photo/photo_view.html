@@ -17,7 +17,9 @@
         <div class="card-body">
             <h1>{{ photo.title }}</h1>
             <p class="card-text">Author: {{ photo.author }}</p>
+        {% if request.user == photo.author %}
             <p class="card-text">Private: {{ photo.private_photo }}</p>
+        {% endif %}
             <p class="card-text">Created at: {{ photo.created_at }}</p>
             <p class="card-text">Albums:</p>
             {% for ph in photo.photos.all %}
